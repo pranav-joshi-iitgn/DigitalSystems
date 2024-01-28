@@ -132,4 +132,4 @@ endmodule
 
 # Simulation
 
-<img src=Assign3_22110197.PNG>
+<img src=Assignment3/Assign3_22110197.PNG>
