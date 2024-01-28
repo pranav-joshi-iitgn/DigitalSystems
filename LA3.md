@@ -5,7 +5,7 @@
 module TFF(T,clk,Q,reset_n,preset_n,load,D);
 input T,clk,reset_n,preset_n,load,D;
 output reg Q;
-always @(posedge clk)
+always @(posedge clk,negedge reset_n,preset_n)
 begin
 if(load)
 Q<=D;
@@ -66,7 +66,7 @@ module shift_register(Q,shift,clk,In,load,D);
 input clk,shift,load,In;
 input [3:0]D;
 output reg [3:0]Q;
-always @(negedge clk)
+always @(posedge clk)
 begin
 if(load)
 Q = D;
@@ -106,22 +106,30 @@ begin
 end
 initial
 begin
-    bcd=1;up=0;En=0;reset=1;load=0;shift=0;In=0;download=0;
-    #10;
+    bcd=0;up=1;En=0;reset=1;load=0;shift=0;In=0;download=0;
+    #10; //resets the counter to all 0s
     download=1;
-    #10;
+    #10; //copies the counter's values to shift register.
     En=1;reset=0;download=0;
-    #200;
+    #200; // counting up in binary for 20 clock cycles.
     En=0;shift=1;
-    #40
+    #40 // stopped counting and shift register has started. Countinue for 4 clock cycles.
     In=1;
-    #40;
-    shift=0;load=1;
-    #30;
-    load=0;En=1;
-    #50;
+    #40; //input to shift register changed to 1
+    shift=0;load=1; //shift register stopped.
+    #20; //loading the shift register's value to counter and waiting for a clock cycle.
+    load=0;En=1;up=0;
+    #50; //Counting down in binary
+    En=0;reset=1;bcd=1;
+    #20; //reset to 9
+    En=1;reset=0;
+    #150 //counting down for 15 clock cycles.
     $finish;
     
 end
 endmodule
 ```
+
+# Simulation
+
+<img src=Assign3_22110197.PNG>
