@@ -64,9 +64,9 @@ TFF T3(Q3_flip_con,clk,Q[3],reset_up_n,reset_down_n,load,D[3]);
 endmodule
 
 module shift_register(Q,clk,InL,InR,D,S);
-input clk,shift,load,In;
+input clk,InR,InL;
 input [3:0]D;
-Input [2:0]S;
+input [2:0]S;
 output reg [3:0]Q;
 always @(posedge clk)
 begin
@@ -96,10 +96,9 @@ input En,reset,clk,bcd,up,load,InL,InR; //reset=1 means reset here.
 input [3:0]Q;
 input [3:0]D;
 input [2:0]S;
-shift_register(D,clk,InL,InR,Q,S);
+shift_register SR(D,clk,InL,InR,Q,S);
 counter C(Q,En,reset,clk,bcd,up,load,D);
 endmodule
-
 ```
 
 ### Test Bench
@@ -108,9 +107,10 @@ endmodule
 `timescale 1ns / 1ps
 module test();
 wire [3:0]Q;
-reg clk,En,up,reset,bcd,load,In,shift,download;
+reg clk,En,up,reset,bcd,load,InR,InL;
+reg [2:0]S;
 wire [3:0]D;
-Load_Shift_Counter uut(Q,En,reset,clk,bcd,up,load,D,In,shift,download);
+Load_Shift_Counter uut(Q,En,reset,clk,bcd,up,load,D,InL,InR,S);
 initial
 begin
     clk=0;
