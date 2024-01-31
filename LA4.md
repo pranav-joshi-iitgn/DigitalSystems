@@ -1,6 +1,6 @@
 ### Modules
 
-```
+```Verilog
 `timescale 1ns / 1ps
 
 module TFF(T,clk,Q,reset_n,preset_n,load,D);
@@ -104,7 +104,7 @@ endmodule
 
 ### Test Bench
 
-```
+```Verilog
 `timescale 1ns / 1ps
 module test();
 wire [3:0]Q;
@@ -120,7 +120,7 @@ initial
 begin
     bcd=0;up=1;En=0;reset=1;load=0;InL=0;InR=0;S=3;
     #10; //resets the counter to all 0s
-   S=0;
+    S=0;
     #10; //copies the counter's values to shift register.
     En=1;reset=0;S=3;
     #200; // counting up in binary for 20 clock cycles.
@@ -144,4 +144,4 @@ endmodule
 
 ### Simulation
 
-![image](Lab4.PNG)
+![image](Assignment4/Simulation.PNG)
