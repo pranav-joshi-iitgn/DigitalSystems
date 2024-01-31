@@ -144,4 +144,4 @@ endmodule
 
 ### Simulation
 
-![image](Assignment3/Assign3_updated.jpeg)
+![image](Assignment3/Assignment3_updated.jpeg)
